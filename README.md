@@ -1,12 +1,14 @@
-# LockettePro
-### LockettePro - A much better Lockette plugin for Bukkit
+> ![WARNING]
+> STILL UNDER DEVELOPMENT
+
+# LocketteProMax
 
 This fork is a continuation of the origial plugin: https://github.com/connection-lost/LockettePro  
-Also contains updates from: https://github.com/NyaaCat/LockettePro  
+Contains updates from: https://github.com/brunyman/LockettePro
 
-LockettePro is a block-protection plugin based on Lockette (https://github.com/Acru/Lockette), the code base is entirely re-written. It is 100% compatable with original Lockette, and the plugin behaviors are also 100% same.
+LocketteProMax is a block-protection plugin based on Lockette (https://github.com/Acru/Lockette), the code base is entirely re-written. It is 100% compatable with original Lockette, and the plugin behaviors are also 100% same.
 
-### LockettePro has a lot of enhancements compared to Lockette:
+### LocketteProMax has a lot of enhancements compared to Lockette:
 
 1. Much better codebase and performance, fixed a lot of issues and glitches.
 2. Real UUID support.
@@ -16,7 +18,8 @@ LockettePro is a block-protection plugin based on Lockette (https://github.com/A
 6. Lock expircy feature, locks can expire after a certain amount of time.
 
 ### Links
-Spigot release page: https://www.spigotmc.org/resources/lockettepro-for-1-14-1-15-1-16.74354/  
-Bukkit release page: http://dev.bukkit.org/bukkit-plugins/lockettepro/  
-MCBBS release page: http://www.mcbbs.net/thread-567962-1-1.html    
+
+Spigot release page: https://www.spigotmc.org/resources/LockettePro-for-1-14-1-15-1-16.74354/  
+Bukkit release page: http://dev.bukkit.org/bukkit-plugins/LockettePro/  
+MCBBS release page: http://www.mcbbs.net/thread-567962-1-1.html  
 MC 1.6~1.7 Port: https://github.com/connection-lost/LockettePro/releases/tag/v1.9.4
