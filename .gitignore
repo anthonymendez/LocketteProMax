@@ -21,3 +21,14 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Gradle directories
+.gradle/
+build/
+
+# run-paper test server directory
+run/
+
+# Allow gradle-wrapper.jar to be committed despite *.jar ignore
+!gradle/wrapper/gradle-wrapper.jar
+

@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'xyz.jpenilla.run-paper' version '3.0.2'
+}
+
+group = 'me.crafter.mc.lockettepro'
+version = '2.11.1-Max'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(26)
+    }
+}
+
+configurations.all {
+    exclude group: 'org.bukkit', module: 'bukkit'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "papermc"
+        url = "https://repo.papermc.io/repository/maven-public/"
+    }
+    maven {
+        name = "enginehub"
+        url = "https://maven.enginehub.org/repo/"
+    }
+    maven {
+        name = "jitpack"
+        url = "https://jitpack.io"
+    }
+    maven {
+        name = "playpro"
+        url = "https://maven.playpro.com"
+    }
+}
+
+dependencies {
+    compileOnly "io.papermc.paper:paper-api:26.2.build.+"
+    compileOnly "com.sk89q.worldguard:worldguard-bukkit:7.0.10"
+    compileOnly "net.dmulloy2:ProtocolLib:5.4.0"
+    compileOnly "com.github.MilkBowl:VaultAPI:1.7"
+    compileOnly "net.coreprotect:coreprotect:22.4"
+}
+
+runServer {
+    minecraftVersion("26.2")
+}
