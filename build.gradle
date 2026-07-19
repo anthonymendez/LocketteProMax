@@ -61,3 +61,4 @@ runServer {
     minecraftVersion("26.2")
     jvmArgs("-Djava.io.tmpdir=/tmp")
 }
+
