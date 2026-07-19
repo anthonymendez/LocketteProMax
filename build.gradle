@@ -42,6 +42,30 @@ dependencies {
     compileOnly "net.dmulloy2:ProtocolLib:5.4.0"
     compileOnly "com.github.MilkBowl:VaultAPI:1.7"
     compileOnly "net.coreprotect:coreprotect:22.4"
+
+    testImplementation "org.mockbukkit.mockbukkit:mockbukkit-v26.1.2:4.114.0"
+    testImplementation "org.junit.jupiter:junit-jupiter:5.11.4"
+    testImplementation "io.papermc.paper:paper-api:26.1.2.build.+"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+}
+
+test {
+    useJUnitPlatform()
+    
+    // Force the test task to compile and run against the compiled JAR file rather than raw class/resource directories.
+    // MockBukkit's Paper classloader expects to read plugin.yml and plugin classes from a valid ZIP/JAR structure
+    // to determine the plugin's environment. Without this, MockBukkit fails to resolve resources.
+    dependsOn jar
+    classpath = project.files(jar.archiveFile) + (classpath - sourceSets.main.output)
+    
+    // Allow ByteBuddy (used by MockBukkit) to reflectively inject the generated plugin subclass into the classloader.
+    // This bypasses Java 16+ module encapsulation restrictions on class definition APIs.
+    jvmArgs '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
+    
+    // Disable ByteBuddy's "safe" checks on Java 26. By default, Java 26 blocks Unsafe-based class injection.
+    // Setting this to false allows MockBukkit's subclass injector to use JVM-internal Unsafe APIs, which
+    // prevents classloading failures during test execution.
+    systemProperty 'net.bytebuddy.safe', 'false'
 }
 
 processResources {

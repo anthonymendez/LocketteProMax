@@ -48,6 +48,8 @@ usage() {
     echo "Commands:"
     echo "  (no args)   Clean, build, and run the testing server (default)"
     echo "  build       Clean and compile the plugin JAR"
+    echo "  test        Run the automated test suite (JUnit 5)"
+    echo "  report      Open the Gradle compilation/deprecation report in browser"
     echo "  run         Run the Paper testing server without rebuilding"
     echo "  clean       Clean Gradle build caches and temporary server files"
     echo "  help        Show this help message"
@@ -81,6 +83,28 @@ case "$1" in
         log_info "=== Cleaning and Building LocketteProMax ==="
         ./gradlew clean build
         log_success "Build completed successfully!"
+        ;;
+    test)
+        log_info "=== Running Automated Tests ==="
+        ./gradlew test
+        log_success "Tests completed successfully!"
+        ;;
+    report)
+        log_info "=== Opening Gradle Problems Report ==="
+        REPORT_PATH="build/reports/problems/problems-report.html"
+        if [ -f "$REPORT_PATH" ]; then
+            log_info "Opening report in browser: $REPORT_PATH"
+            if command -v xdg-open > /dev/null; then
+                xdg-open "$REPORT_PATH"
+            elif command -v open > /dev/null; then
+                open "$REPORT_PATH"
+            else
+                log_error "Could not find xdg-open or open to launch the browser. You can open it manually at: file://\$(pwd)/\$REPORT_PATH"
+            fi
+            log_success "Report opened!"
+        else
+            log_error "No problems report found at \$REPORT_PATH. Try running a build or tests first."
+        fi
         ;;
     run)
         log_info "=== Launching Paper Server (no build) ==="

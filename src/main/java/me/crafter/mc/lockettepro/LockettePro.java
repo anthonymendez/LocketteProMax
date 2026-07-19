@@ -15,6 +15,16 @@ import java.util.List;
 
 public class LockettePro extends JavaPlugin {
 
+    // Required by MockBukkit to instantiate the plugin during unit testing.
+    public LockettePro() {
+        super();
+    }
+
+    // Required by MockBukkit's classloader to initialize the plugin superclass with mock server context.
+    protected LockettePro(org.bukkit.plugin.java.JavaPluginLoader loader, org.bukkit.plugin.PluginDescriptionFile description, java.io.File dataFolder, java.io.File file) {
+        super(loader, description, dataFolder, file);
+    }
+
     private static Plugin plugin;
     private boolean debug = false;
     private static boolean needcheckhand = true;

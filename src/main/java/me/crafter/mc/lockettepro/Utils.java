@@ -12,13 +12,16 @@ import java.net.URLConnection;
 import java.time.Duration;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -31,8 +34,6 @@ import org.bukkit.block.sign.SignSide;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 
 public class Utils {
 
@@ -42,6 +43,21 @@ public class Utils {
             .expireAfterAccess(Duration.ofSeconds(30))
             .build();
     private static final Set<UUID> notified = new HashSet<>();
+    private static final Map<Location, CacheEntry> blockCache = new ConcurrentHashMap<>();
+
+    // Replaces the deprecated Bukkit Metadata API
+    // (MetadataValue/FixedMetadataValue) to avoid scheduled deprecation
+    // removals, eliminate metadata lookup overhead, and provide a lightweight,
+    // type-safe in-memory cache.
+    private static class CacheEntry {
+        final long expires;
+        final boolean locked;
+
+        CacheEntry(long expires, boolean locked) {
+            this.expires = expires;
+            this.locked = locked;
+        }
+    }
 
     /**
      * Get a sign from a block.
@@ -133,6 +149,19 @@ public class Utils {
         getSignFromBlock(block).ifPresentOrElse(sign -> {
             setSignLine(sign, line, text, update);
         }, () -> System.out.println("[Debug] Block is not a sign. Convert this to a proper log later."));
+    }
+
+    /**
+     * Set the text on the given line on the front of the sign.
+     * Note: Checks if the block is a sign first. Use getSignFromBlock to get a
+     * sign.
+     * 
+     * @param block The block to set the line on.
+     * @param line  The line to set (0-3).
+     * @param text  The text to set.
+     */
+    public static void setSignLine(Block block, int line, String text) {
+        setSignLine(block, line, text, true);
     }
 
     /**
@@ -322,53 +351,43 @@ public class Utils {
      * @return Whether the block has a valid cache.
      */
     public static boolean hasValidCache(Block block) {
-        List<MetadataValue> metadatas = block.getMetadata("expires");
-        if (metadatas.isEmpty()) {
-            return false;
-        }
-
-        long expires = metadatas.get(0).asLong();
-        return expires > System.currentTimeMillis();
+        CacheEntry entry = blockCache.get(block.getLocation());
+        return entry != null && entry.expires > System.currentTimeMillis();
     }
 
     /**
-     * Get the access of a block.
+     * Gets the access status of a block.
      * 
-     * @param block The block to get the access of.
-     * @return The access of the block.
+     * @param block The block to get the access status of.
+     * @return Whether the block is locked.
      */
     public static boolean getAccess(Block block) { // Requires hasValidCache()
-        List<MetadataValue> metadatas = block.getMetadata("locked");
-        return metadatas.get(0).asBoolean();
+        CacheEntry entry = blockCache.get(block.getLocation());
+        return entry != null && entry.locked;
     }
 
     /**
-     * Set the cache of a block.
+     * Sets the cache for a block.
      * 
-     * @param block  The block to set the cache of.
-     * @param access The access of the block.
+     * @param block  The block to set the cache for.
+     * @param access Whether the block is locked.
      */
     public static void setCache(Block block, boolean access) {
-        block.removeMetadata("expires", LockettePro.getPlugin());
-        block.removeMetadata("locked", LockettePro.getPlugin());
-        block.setMetadata("expires", new FixedMetadataValue(LockettePro.getPlugin(),
-                System.currentTimeMillis() + Config.getCacheTimeMillis()));
-        block.setMetadata("locked", new FixedMetadataValue(LockettePro.getPlugin(), access));
+        long expires = System.currentTimeMillis() + Config.getCacheTimeMillis();
+        blockCache.put(block.getLocation(), new CacheEntry(expires, access));
     }
 
     /**
-     * Reset the cache of a block.
+     * Resets the cache for a block.
      * 
-     * @param block The block to reset the cache of.
+     * @param block The block to reset the cache for.
      */
     public static void resetCache(Block block) {
-        block.removeMetadata("expires", LockettePro.getPlugin());
-        block.removeMetadata("locked", LockettePro.getPlugin());
+        blockCache.remove(block.getLocation());
         for (BlockFace blockFace : LocketteProAPI.newsfaces) {
             Block relative = block.getRelative(blockFace);
             if (relative.getType() == block.getType()) {
-                relative.removeMetadata("expires", LockettePro.getPlugin());
-                relative.removeMetadata("locked", LockettePro.getPlugin());
+                blockCache.remove(relative.getLocation());
             }
         }
     }
