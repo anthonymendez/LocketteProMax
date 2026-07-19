@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'me.crafter.mc.lockettepro'
-version = '2.11.1-Max'
+version = pluginVersion
 
 java {
     toolchain {
@@ -44,6 +44,20 @@ dependencies {
     compileOnly "net.coreprotect:coreprotect:22.4"
 }
 
+processResources {
+    def props = [
+        pluginName: pluginName,
+        pluginVersion: pluginVersion,
+        pluginMainCommand: pluginMainCommand
+    ]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}
+
 runServer {
     minecraftVersion("26.2")
+    jvmArgs("-Djava.io.tmpdir=/tmp")
 }

@@ -45,7 +45,7 @@ public class BlockPlayerListener implements Listener {
             if (!((event.getPlayer().isSneaking() && Config.getQuickProtectAction() == (byte)2) ||
                     (!event.getPlayer().isSneaking() && Config.getQuickProtectAction() == (byte)1))) return;
             // Check permission 
-            if (!player.hasPermission("lockettepro.lock")) return;
+            if (!player.hasPermission(LockettePro.getPermission("lock"))) return;
             // Get target block to lock
             BlockFace blockface = event.getBlockFace();
             if (blockface == BlockFace.NORTH || blockface == BlockFace.WEST || blockface == BlockFace.EAST || blockface == BlockFace.SOUTH){
@@ -79,7 +79,7 @@ public class BlockPlayerListener implements Listener {
                         }
                         // Cleanups - Expiracy
                         if (Config.isLockExpire()) {
-                            if (player.hasPermission("lockettepro.noexpire")) {
+                            if (player.hasPermission(LockettePro.getPermission("noexpire"))) {
                                 Utils.updateLineWithTime(newsign, true); // set created to -1 (no expire)
                             } else {
                                 Utils.updateLineWithTime(newsign, false); // set created to now
@@ -126,7 +126,7 @@ public class BlockPlayerListener implements Listener {
          *  Currently this is fixed by using trimmed line in checking permission. Trimmed
          *  line should not be used anywhere else.  
          */
-        if (!player.hasPermission("lockettepro.lock")){
+        if (!player.hasPermission(LockettePro.getPermission("lock"))){
             String toplinetrimmed = topline.trim();
             if (LocketteProAPI.isLockString(toplinetrimmed) || LocketteProAPI.isAdditionalString(toplinetrimmed)){
                 event.setLine(0, Config.getLang("sign-error"));
@@ -146,7 +146,7 @@ public class BlockPlayerListener implements Listener {
                 if (!locked && !LocketteProAPI.isUpDownLockedDoor(block)){
                     if (LocketteProAPI.isLockString(topline)){
                         Utils.sendMessages(player, Config.getLang("locked-manual"));
-                        if (!player.hasPermission("lockettepro.lockothers")){ // Player with permission can lock with another name
+                        if (!player.hasPermission(LockettePro.getPermission("lockothers"))){ // Player with permission can lock with another name
                             event.setLine(1, player.getName());
                         }
                         Utils.resetCache(block);
@@ -188,8 +188,8 @@ public class BlockPlayerListener implements Listener {
         if (block == null) return;
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.hasBlock() && Tag.WALL_SIGNS.isTagged(block.getType())) {
             Player player = event.getPlayer();
-            if (!player.hasPermission("lockettepro.edit")) return;
-            if (LocketteProAPI.isOwnerOfSign(block, player) || (LocketteProAPI.isLockSignOrAdditionalSign(block) && player.hasPermission("lockettepro.admin.edit"))){
+            if (!player.hasPermission(LockettePro.getPermission("edit"))) return;
+            if (LocketteProAPI.isOwnerOfSign(block, player) || (LocketteProAPI.isLockSignOrAdditionalSign(block) && player.hasPermission(LockettePro.getPermission("admin.edit")))){
                 Utils.selectSign(player, block);
                 Utils.sendMessages(player, Config.getLang("sign-selected"));
                 Utils.playLockEffect(player, block);
@@ -203,7 +203,7 @@ public class BlockPlayerListener implements Listener {
         if (event.isCancelled()) return;
         Block block = event.getBlock();
         Player player = event.getPlayer();
-        if (player.hasPermission("lockettepro.admin.break")) return;
+        if (player.hasPermission(LockettePro.getPermission("admin.break"))) return;
         if (LocketteProAPI.isLockSign(block)){
             if (LocketteProAPI.isOwnerOfSign(block, player)){
                 Utils.sendMessages(player, Config.getLang("break-own-lock-sign"));
@@ -267,7 +267,7 @@ public class BlockPlayerListener implements Listener {
         case LEFT_CLICK_BLOCK:
         case RIGHT_CLICK_BLOCK:
             Player player = event.getPlayer();
-            if (((LocketteProAPI.isLocked(block) && !LocketteProAPI.isUser(block, player)) || (LocketteProAPI.isUpDownLockedDoor(block) && !LocketteProAPI.isUserUpDownLockedDoor(block, player))) && !player.hasPermission("lockettepro.admin.use")){
+            if (((LocketteProAPI.isLocked(block) && !LocketteProAPI.isUser(block, player)) || (LocketteProAPI.isUpDownLockedDoor(block) && !LocketteProAPI.isUserUpDownLockedDoor(block, player))) && !player.hasPermission(LockettePro.getPermission("admin.use"))){
                 Utils.sendMessages(player, Config.getLang("block-is-locked"));
                 event.setCancelled(true);
                 Utils.playAccessDenyEffect(player, block);
@@ -316,7 +316,7 @@ public class BlockPlayerListener implements Listener {
         if (event.isCancelled()) return;
         Block block = event.getBlock();
         Player player = event.getPlayer();
-        if (player.hasPermission("lockettepro.admin.interfere")) return;
+        if (player.hasPermission(LockettePro.getPermission("admin.interfere"))) return;
         if (LocketteProAPI.mayInterfere(block, player)){
             Utils.sendMessages(player, Config.getLang("cannot-interfere-with-others"));
             event.setCancelled(true);
@@ -330,7 +330,7 @@ public class BlockPlayerListener implements Listener {
         if (event.isCancelled()) return;
         Block block = event.getBlock();
         Player player = event.getPlayer();
-        if (!player.hasPermission("lockettepro.lock")) return;
+        if (!player.hasPermission(LockettePro.getPermission("lock"))) return;
         if (Utils.shouldNotify(player) && Config.isLockable(block.getType())){
             switch (Config.getQuickProtectAction()){
             case (byte)0:

@@ -3,6 +3,9 @@
 # Exit on error
 set -e
 
+# Use Linux tmp dir for executing temporary binaries (fixes NTFS execution mapping issues)
+export TMPDIR=/tmp
+
 # Base directory of the project
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$PROJECT_DIR"
@@ -49,6 +52,20 @@ usage() {
     echo "  clean       Clean Gradle build caches and temporary server files"
     echo "  help        Show this help message"
 }
+
+# Ensure the spark plugins directory is symlinked to /tmp/spark
+# This works around the NTFS mount executable mapping issue for async-profiler.so
+if [ -d run/plugins ]; then
+    if [ ! -L run/plugins/spark ] && [ -d run/plugins/spark ]; then
+        log_info "Migrating existing spark directory to /tmp/spark..."
+        rm -rf run/plugins/spark
+    fi
+fi
+mkdir -p /tmp/spark
+mkdir -p run/plugins
+if [ ! -L run/plugins/spark ]; then
+    ln -sf /tmp/spark run/plugins/spark
+fi
 
 # Run tasks based on the argument
 case "$1" in
