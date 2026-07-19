@@ -1,0 +1,25 @@
+name: ${pluginName}
+main: me.crafter.mc.lockettepro.LockettePro
+author: connection_lost
+softdepend: [Vault, WorldGuard, ProtocolLib, CoreProtect]
+loadbefore: [SignShop]
+version: ${pluginVersion}
+api-version: 1.13
+description: >
+             LocketteProMax is a chest protection plugin for Bukkit.
+commands:
+   ${pluginMainCommand}:
+      permission: ${pluginMainCommand}.command
+      usage: |
+         /lock
+      aliases: [lock, lockette, lockit]
+permissions:
+   ${pluginMainCommand}.command:
+      description: Command permission for ${pluginName}
+      default: true
+   ${pluginMainCommand}.lock:
+      description: Basic lock permission
+      default: true
+   ${pluginMainCommand}.edit:
+      description: Edit sign permission
+      default: true
