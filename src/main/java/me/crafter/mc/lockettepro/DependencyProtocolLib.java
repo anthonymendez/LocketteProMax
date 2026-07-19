@@ -69,7 +69,7 @@ public class DependencyProtocolLib {
             if (LocketteProAPI.isLineExpired(line1)) {
                 nbtcompound.put("Text1", WrappedChatComponent.fromText(Config.getLockExpireString()).getJson());
             } else {
-                nbtcompound.put("Text1", WrappedChatComponent.fromText(Utils.StripSharpSign(line1)).getJson());
+                nbtcompound.put("Text1", WrappedChatComponent.fromText(Utils.stripSharpSign(line1)).getJson());
             }
             // Other line
             for (int i = 2; i <= 4; i++) {
