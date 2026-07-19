@@ -29,6 +29,9 @@ Avoid hardcoding the command label check in command handlers. Check the command 
 if (cmd.getName().equalsIgnoreCase(plugin.getName())) { ... }
 ```
 
+### 3. Java Style and Readability
+All Java code in this project must adhere to [Google's Java Style Guide](https://google.github.io/styleguide/javaguide.html) (covering styling, indentation, formatting, and naming conventions).
+
 ## Running & Testing Workarounds (NTFS mounts)
 Because this repository resides on an NTFS filesystem (`/mnt/Roommate`), loading memory-mapped native files (such as Paper's bundled `spark` profiler's `libasyncProfiler.so`) directly from it fails with:
 `failed to map segment from shared object`
