@@ -1,5 +1,5 @@
 # Spanish translation by Alarar and Teen_Biscuits
-command-usage: "&6[Private] &bPrivate plugin ayuda\n&c1. Para agregar un usuario al private, click derecho en el cartel, y escribe /lock <numero fila> <nombre> para cambiar o agregar fila.\n&c2. Para recargar la config, utiliza /lock reload.\nLockettepro by connection_lost"
+command-usage: "&6[Private] &bPrivate plugin ayuda\n&c1. Para agregar un usuario al private, click derecho en el cartel, y escribe /lock <numero fila> <nombre> para cambiar o agregar fila.\n&c2. Para recargar la config, utiliza /lock reload.\n${pluginName} by connection_lost"
 you-can-quick-lock-it: '&6[Private] &aClick derecho con el cartel en lo que quieras proteger.'
 you-can-manual-lock-it: '&6[Private] &aPon un cartel y escribe [Private] para privatizarlo.'
 config-reloaded: '&6[Private] &aConfig recargada.'
