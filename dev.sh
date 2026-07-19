@@ -1,0 +1,94 @@
+#!/bin/bash
+
+# Exit on error
+set -e
+
+# Base directory of the project
+PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$PROJECT_DIR"
+
+# ANSI Color Codes
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Logging functions
+log_info() {
+    echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+log_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+log_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+# Error handler
+failure_handler() {
+    echo ""
+    log_error "Execution failed! Please check the output above for details."
+}
+trap 'failure_handler' ERR
+
+# Print usage instructions
+usage() {
+    echo -e "Usage: $0 [command]"
+    echo ""
+    echo "Commands:"
+    echo "  (no args)   Clean, build, and run the testing server (default)"
+    echo "  build       Clean and compile the plugin JAR"
+    echo "  run         Run the Paper testing server without rebuilding"
+    echo "  clean       Clean Gradle build caches and temporary server files"
+    echo "  help        Show this help message"
+}
+
+# Run tasks based on the argument
+case "$1" in
+    ""|default)
+        log_info "=== [1/2] Cleaning and Building LocketteProMax ==="
+        ./gradlew clean build
+        log_success "Build completed successfully!"
+        log_info "=== [2/2] Launching Paper Server ==="
+        ./gradlew runServer
+        log_success "Paper server closed successfully."
+        ;;
+    build)
+        log_info "=== Cleaning and Building LocketteProMax ==="
+        ./gradlew clean build
+        log_success "Build completed successfully!"
+        ;;
+    run)
+        log_info "=== Launching Paper Server (no build) ==="
+        ./gradlew runServer
+        log_success "Paper server closed successfully."
+        ;;
+    clean)
+        log_info "=== Cleaning Gradle Build & Temporary Files ==="
+        ./gradlew clean
+        # Optional: Ask if they want to clean server files
+        read -p "Do you also want to clear local server data (world, logs, cache)? [y/N]: " clean_server
+        if [[ $clean_server =~ ^[Yy]$ ]]; then
+            log_info "Clearing server data..."
+            rm -rf run/world run/world_nether run/world_the_end run/logs run/cache run/plugins/LockettePro*
+            log_success "Server data cleared."
+        fi
+        log_success "Clean completed successfully!"
+        ;;
+    help|-h|--help)
+        usage
+        ;;
+    *)
+        log_error "Unknown command: $1"
+        usage
+        trap - ERR
+        exit 1
+        ;;
+esac
