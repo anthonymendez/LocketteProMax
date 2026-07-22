@@ -69,6 +69,28 @@ if [ ! -L run/plugins/spark ]; then
     ln -sf /tmp/spark run/plugins/spark
 fi
 
+# Print test coverage summary from JaCoCo XML report if available
+print_coverage() {
+    local xml_path="build/reports/jacoco/test/jacocoTestReport.xml"
+    if [ -f "$xml_path" ]; then
+        python3 -c "
+import xml.etree.ElementTree as ET
+try:
+    tree = ET.parse('$xml_path')
+    root = tree.getroot()
+    stats = {c.attrib['type']: (int(c.attrib['covered']), int(c.attrib['covered']) + int(c.attrib['missed'])) for c in root.findall('counter')}
+    if 'LINE' in stats:
+        l_cov, l_tot = stats['LINE']
+        l_pct = (l_cov / l_tot * 100) if l_tot > 0 else 0
+        m_cov, m_tot = stats.get('METHOD', (0, 0))
+        m_pct = (m_cov / m_tot * 100) if m_tot > 0 else 0
+        print(f'\033[0;34m[INFO]\033[0m Test Coverage: \033[1;33m{l_pct:.1f}%\033[0m lines ({l_cov}/{l_tot}), \033[1;33m{m_pct:.1f}%\033[0m methods ({m_cov}/{m_tot})')
+except Exception:
+    pass
+" 2>/dev/null || true
+    fi
+}
+
 # Run tasks based on the argument
 case "$1" in
     ""|default)
@@ -76,6 +98,7 @@ case "$1" in
         log_info "Removing old plugin JAR and data folder from run/plugins/..."
         rm -rf run/plugins/LocketteProMax*
         ./gradlew clean build
+        print_coverage
         log_success "Build completed successfully!"
         log_info "=== [2/2] Launching Paper Server ==="
         ./gradlew runServer
@@ -84,11 +107,13 @@ case "$1" in
     build)
         log_info "=== Cleaning and Building LocketteProMax ==="
         ./gradlew clean build
+        print_coverage
         log_success "Build completed successfully!"
         ;;
     test)
         log_info "=== Running Automated Tests ==="
         ./gradlew test
+        print_coverage
         log_success "Tests completed successfully!"
         ;;
     report)

@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'jacoco'
     id 'xyz.jpenilla.run-paper' version '3.0.2'
 }
 
@@ -51,6 +52,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
     
     // Force the test task to compile and run against the compiled JAR file rather than raw class/resource directories.
     // MockBukkit's Paper classloader expects to read plugin.yml and plugin classes from a valid ZIP/JAR structure
@@ -66,6 +68,14 @@ test {
     // Setting this to false allows MockBukkit's subclass injector to use JVM-internal Unsafe APIs, which
     // prevents classloading failures during test execution.
     systemProperty 'net.bytebuddy.safe', 'false'
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
 }
 
 processResources {
