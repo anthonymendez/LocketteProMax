@@ -73,6 +73,8 @@ fi
 case "$1" in
     ""|default)
         log_info "=== [1/2] Cleaning and Building LocketteProMax ==="
+        log_info "Removing old plugin JAR and data folder from run/plugins/..."
+        rm -rf run/plugins/LocketteProMax*
         ./gradlew clean build
         log_success "Build completed successfully!"
         log_info "=== [2/2] Launching Paper Server ==="
@@ -114,11 +116,14 @@ case "$1" in
     clean)
         log_info "=== Cleaning Gradle Build & Temporary Files ==="
         ./gradlew clean
+        log_info "Removing plugin JAR and data folder from run/plugins/..."
+        rm -rf run/plugins/LocketteProMax*
+        log_success "Plugin files removed."
         # Optional: Ask if they want to clean server files
         read -p "Do you also want to clear local server data (world, logs, cache)? [y/N]: " clean_server
         if [[ $clean_server =~ ^[Yy]$ ]]; then
             log_info "Clearing server data..."
-            rm -rf run/world run/world_nether run/world_the_end run/logs run/cache run/plugins/LockettePro*
+            rm -rf run/world run/world_nether run/world_the_end run/logs run/cache
             log_success "Server data cleared."
         fi
         log_success "Clean completed successfully!"
