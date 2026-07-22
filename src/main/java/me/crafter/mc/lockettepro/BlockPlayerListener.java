@@ -152,7 +152,7 @@ public class BlockPlayerListener implements Listener {
                 return;
             }
             // Owner (or admin): validate line 0
-            String newLine0 = event.getLine(0);
+            String newLine0 = Utils.getEventLine(event, 0);
             if (newLine0 == null) newLine0 = "";
             if (!LocketteProAPI.isLockString(newLine0) && !LocketteProAPI.isAdditionalString(newLine0)) {
                 // Invalid line 0 — write plain [ERROR] (no color code in the line text).
@@ -183,7 +183,7 @@ public class BlockPlayerListener implements Listener {
 
 
         // --- Original new-sign-placement logic (unchanged) ---
-        String topline = event.getLine(0);
+        String topline = Utils.getEventLine(event, 0);
         if (topline == null) topline = "";
         /*  Issue #46 - Old version of Minecraft trim signs in unexpected way.
          *  This is caused by Minecraft was doing: (unconfirmed but seemingly)\

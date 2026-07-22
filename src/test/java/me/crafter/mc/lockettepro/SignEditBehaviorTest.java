@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+import net.kyori.adventure.text.Component;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -12,6 +15,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.WallSign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.block.sign.Side;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -60,11 +64,12 @@ public class SignEditBehaviorTest extends LocketteProTestBase {
 
   /** Simulate a SignChangeEvent on {@code signBlock} and fire it through the listener. */
   private SignChangeEvent fireSignChangeEvent(Player player, String... lines) {
-    String[] paddedLines = new String[4];
+    List<Component> componentLines = new ArrayList<>();
     for (int i = 0; i < 4; i++) {
-      paddedLines[i] = (i < lines.length) ? lines[i] : "";
+      String line = (i < lines.length && lines[i] != null) ? lines[i] : "";
+      componentLines.add(Component.text(line));
     }
-    SignChangeEvent event = new SignChangeEvent(signBlock, player, paddedLines);
+    SignChangeEvent event = new SignChangeEvent(signBlock, player, componentLines, Side.FRONT);
     listener.onManualLock(event);
     return event;
   }
@@ -73,14 +78,14 @@ public class SignEditBehaviorTest extends LocketteProTestBase {
   @Test
   public void testNoChangeSilent() {
     SignChangeEvent event = fireSignChangeEvent(owner, "[Private]", "Alice", "", "");
-    assertEquals("[Private]", event.getLine(0));
+    assertEquals("[Private]", Utils.getEventLine(event, 0));
   }
 
   /** Owner changing line 0 to a non-lock string must produce [ERROR] on line 0. */
   @Test
   public void testOwnerInvalidLine0GetsError() {
     SignChangeEvent event = fireSignChangeEvent(owner, "NotPrivate", "Alice", "", "");
-    assertEquals("[ERROR]", event.getLine(0));
+    assertEquals("[ERROR]", Utils.getEventLine(event, 0));
     assertTrue(LocketteProAPI.isLocked(chestBlock));
   }
 
@@ -99,7 +104,7 @@ public class SignEditBehaviorTest extends LocketteProTestBase {
     assertTrue(LocketteProAPI.isSignError(signBlock));
 
     SignChangeEvent event = fireSignChangeEvent(owner, "[Private]", "Alice", "", "");
-    assertEquals("[Private]", event.getLine(0));
+    assertEquals("[Private]", Utils.getEventLine(event, 0));
   }
 
   /** After [ERROR] state, a typo like [Private. must still produce [ERROR]. */
@@ -107,7 +112,7 @@ public class SignEditBehaviorTest extends LocketteProTestBase {
   public void testOwnerTypoAfterErrorGetsError() {
     Utils.setSignLine(signBlock, 0, "[ERROR]", true);
     SignChangeEvent event = fireSignChangeEvent(owner, "[Private.", "Alice", "", "");
-    assertEquals("[ERROR]", event.getLine(0));
+    assertEquals("[ERROR]", Utils.getEventLine(event, 0));
   }
 
   /** isLockSign() must return true even when the sign's dye color is RED. */
@@ -126,8 +131,8 @@ public class SignEditBehaviorTest extends LocketteProTestBase {
     SignChangeEvent event = fireSignChangeEvent(stranger, "[Private]", "Charlie", "", "");
 
     // Lines restored to original
-    assertEquals("[Private]", event.getLine(0));
-    assertEquals("Alice", event.getLine(1));
+    assertEquals("[Private]", Utils.getEventLine(event, 0));
+    assertEquals("Alice", Utils.getEventLine(event, 1));
     assertTrue(LocketteProAPI.isOwner(chestBlock, owner));
     assertFalse(LocketteProAPI.isOwner(chestBlock, stranger));
   }
@@ -136,7 +141,7 @@ public class SignEditBehaviorTest extends LocketteProTestBase {
   @Test
   public void testOwnerAddsUserSilently() {
     SignChangeEvent event = fireSignChangeEvent(owner, "[Private]", "Alice", "Charlie", "");
-    assertEquals("[Private]", event.getLine(0));
-    assertEquals("Charlie", event.getLine(2));
+    assertEquals("[Private]", Utils.getEventLine(event, 0));
+    assertEquals("Charlie", Utils.getEventLine(event, 2));
   }
 }

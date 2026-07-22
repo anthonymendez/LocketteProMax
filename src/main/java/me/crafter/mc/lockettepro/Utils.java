@@ -17,7 +17,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
@@ -33,6 +35,7 @@ import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class Utils {
@@ -89,6 +92,18 @@ public class Utils {
      */
     public static String getSignLine(Sign sign, int line) {
         return LegacyComponentSerializer.legacySection().serialize(sign.getSide(Side.FRONT).line(line));
+    }
+
+    /**
+     * Get plain text from a SignChangeEvent line Component without using deprecated SignChangeEvent#getLine(int).
+     *
+     * @param event The SignChangeEvent.
+     * @param line  The line index (0-3).
+     * @return The text from the given line in the event.
+     */
+    public static String getEventLine(SignChangeEvent event, int line) {
+        Component comp = event.line(line);
+        return comp == null ? "" : PlainTextComponentSerializer.plainText().serialize(comp);
     }
 
     /**
