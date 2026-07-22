@@ -1,5 +1,6 @@
 package me.crafter.mc.lockettepro;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -508,20 +509,34 @@ public class LocketteProAPI {
     }
 
     public static boolean isLockSign(Block block) {
-        return isSign(block) && isLockString(Utils.getSignLine((Sign) block.getState(), 0));
+        if (!isSign(block)) return false;
+        // Strip legacy color codes: a red sign dye causes getSignLine to return
+        // color-prefixed text like "§4[Private]", breaking the plain-string comparison.
+        String line0 = ChatColor.stripColor(Utils.getSignLine((Sign) block.getState(), 0));
+        return isLockString(line0);
     }
 
     public static boolean isAdditionalSign(Block block) {
-        return isSign(block) && isAdditionalString(Utils.getSignLine((Sign) block.getState(), 0));
+        if (!isSign(block)) return false;
+        String line0 = ChatColor.stripColor(Utils.getSignLine((Sign) block.getState(), 0));
+        return isAdditionalString(line0);
     }
 
     public static boolean isLockSignOrAdditionalSign(Block block) {
-        if (isSign(block)) {
-            String line = Utils.getSignLine((Sign) block.getState(), 0);
-            return isLockStringOrAdditionalString(line);
-        } else {
-            return false;
-        }
+        if (!isSign(block)) return false;
+        String line0 = ChatColor.stripColor(Utils.getSignLine((Sign) block.getState(), 0));
+        return isLockStringOrAdditionalString(line0);
+    }
+
+    /**
+     * Returns true if the sign currently has the plugin's [ERROR] marker on line 0,
+     * indicating it was previously invalidated by LocketteProMax.
+     */
+    public static boolean isSignError(Block block) {
+        if (!isSign(block)) return false;
+        // Strip all color codes (from sign dye or legacy §X in text) before comparing.
+        String line0 = ChatColor.stripColor(Utils.getSignLine((Sign) block.getState(), 0)).trim();
+        return line0.equals("[ERROR]");
     }
 
     public static boolean isOwnerOnSign(Block block, Player player) { // Requires isLockSign

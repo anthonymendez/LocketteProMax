@@ -6,6 +6,9 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Sign;
+import org.bukkit.block.sign.Side;
+import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -113,11 +116,77 @@ public class BlockPlayerListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onManualLock(SignChangeEvent event){
         if (!Tag.WALL_SIGNS.isTagged(event.getBlock().getType())) return;
+        Block block = event.getBlock();
+        Player player = event.getPlayer();
+
+        // --- Guard: editing a pre-existing lock/additional sign via the sign UI ---
+        // In Minecraft 26.2+, right-clicking any existing sign fires a SignChangeEvent
+        // when the player closes the editor. We must handle this case separately from
+        // a player placing a brand-new sign.
+        //
+        // We detect "existing sign" by checking whether the attached block is already
+        // locked AND this sign is one of its associated signs. We cannot rely on
+        // isLockSignOrAdditionalSign(block) alone because the sign may have previously
+        // had [ERROR] written to line 0, which would make that check fail.
+        Block attachedForGuard = LocketteProAPI.getAttachedBlock(block);
+        // Detect "editing existing sign" by checking the sign's own line 0, not the locked
+        // state of the attached block — when [ERROR] is on line 0, isLocked() returns false.
+        boolean isExistingSign = LocketteProAPI.isSign(block)
+                && LocketteProAPI.isLockable(attachedForGuard)
+                && (LocketteProAPI.isLockSignOrAdditionalSign(block)
+                    || LocketteProAPI.isSignError(block));
+
+        if (isExistingSign) {
+            // Non-owner: restore original lines and send no-permission.
+            // For signs in [ERROR] state, isOwnerOfSign() doesn't work (isLockSign fails),
+            // so fall back to isOwnerOnSign() which reads line 1 directly.
+            boolean isOwner = LocketteProAPI.isOwnerOfSign(block, player)
+                    || LocketteProAPI.isOwnerOnSign(block, player)
+                    || player.hasPermission(LockettePro.getPermission("admin.edit"));
+            if (!isOwner) {
+                String[] originalLines = Utils.getSignLines((Sign) block.getState());
+                for (int i = 0; i < 4; i++) {
+                    event.line(i, net.kyori.adventure.text.Component.text(originalLines[i]));
+                }
+                Utils.sendMessages(player, Config.getLang("no-permission"));
+                return;
+            }
+            // Owner (or admin): validate line 0
+            String newLine0 = event.getLine(0);
+            if (newLine0 == null) newLine0 = "";
+            if (!LocketteProAPI.isLockString(newLine0) && !LocketteProAPI.isAdditionalString(newLine0)) {
+                // Invalid line 0 — write plain [ERROR] (no color code in the line text).
+                // Paper interprets §4 in setLine() as a sign dye change to RED, which
+                // then bleeds into future getSignLine() reads. We set the dye separately
+                // on the next tick, after the event is committed to the block.
+                event.setLine(0, "[ERROR]");
+                Utils.sendMessages(player, Config.getLang("cannot-change-this-line"));
+                Bukkit.getScheduler().runTask(LockettePro.getPlugin(), () -> {
+                    Utils.getSignFromBlock(block).ifPresent(s -> Utils.setSignColor(s, DyeColor.RED, true));
+                });
+            } else {
+                // Valid lock string — reset sign dye to default on the next tick,
+                // after the event has been committed to the block.
+                DyeColor defaultColor;
+                {
+                    Sign signState = (Sign) block.getState();
+                    defaultColor = Utils.isSignDarkMaterial(signState) ? DyeColor.WHITE : DyeColor.BLACK;
+                }
+                final DyeColor resetColor = defaultColor;
+                Bukkit.getScheduler().runTask(LockettePro.getPlugin(), () -> {
+                    Utils.getSignFromBlock(block).ifPresent(s -> Utils.setSignColor(s, resetColor, true));
+                });
+            }
+            Utils.resetCache(attachedForGuard);
+            return;
+        }
+
+
+        // --- Original new-sign-placement logic (unchanged) ---
         String topline = event.getLine(0);
         if (topline == null) topline = "";
-        Player player = event.getPlayer();
         /*  Issue #46 - Old version of Minecraft trim signs in unexpected way.
-         *  This is caused by Minecraft was doing: (unconfirmed but seemingly)
+         *  This is caused by Minecraft was doing: (unconfirmed but seemingly)\
          *  Place Sign -> Event Fire -> Trim Sign
          *  The event.getLine() will be inaccurate if the line has white space to trim
          * 
@@ -135,33 +204,33 @@ public class BlockPlayerListener implements Listener {
             }
         }
         if (LocketteProAPI.isLockString(topline) || LocketteProAPI.isAdditionalString(topline)){
-            Block block = LocketteProAPI.getAttachedBlock(event.getBlock());
-            if (LocketteProAPI.isLockable(block)){
-                if (Dependency.isProtectedFrom(block, player)){ // External check here
+            Block attachedBlock = LocketteProAPI.getAttachedBlock(event.getBlock());
+            if (LocketteProAPI.isLockable(attachedBlock)){
+                if (Dependency.isProtectedFrom(attachedBlock, player)){ // External check here
                     event.setLine(0, Config.getLang("sign-error"));
                     Utils.sendMessages(player, Config.getLang("cannot-lock-manual"));
                     return; 
                 }
-                boolean locked = LocketteProAPI.isLocked(block);
-                if (!locked && !LocketteProAPI.isUpDownLockedDoor(block)){
+                boolean locked = LocketteProAPI.isLocked(attachedBlock);
+                if (!locked && !LocketteProAPI.isUpDownLockedDoor(attachedBlock)){
                     if (LocketteProAPI.isLockString(topline)){
                         Utils.sendMessages(player, Config.getLang("locked-manual"));
                         if (!player.hasPermission(LockettePro.getPermission("lockothers"))){ // Player with permission can lock with another name
                             event.setLine(1, player.getName());
                         }
-                        Utils.resetCache(block);
+                        Utils.resetCache(attachedBlock);
                     } else {
                         Utils.sendMessages(player, Config.getLang("not-locked-yet-manual"));
                         event.setLine(0, Config.getLang("sign-error"));
                     }
-                } else if (!locked && LocketteProAPI.isOwnerUpDownLockedDoor(block, player)){
+                } else if (!locked && LocketteProAPI.isOwnerUpDownLockedDoor(attachedBlock, player)){
                     if (LocketteProAPI.isLockString(topline)){
                         Utils.sendMessages(player, Config.getLang("cannot-lock-door-nearby-manual"));
                         event.setLine(0, Config.getLang("sign-error"));
                     } else {
                         Utils.sendMessages(player, Config.getLang("additional-sign-added-manual"));
                     }
-                } else if (LocketteProAPI.isOwner(block, player)){
+                } else if (LocketteProAPI.isOwner(attachedBlock, player)){
                     if (LocketteProAPI.isLockString(topline)){
                         Utils.sendMessages(player, Config.getLang("block-already-locked-manual"));
                         event.setLine(0, Config.getLang("sign-error"));
@@ -171,15 +240,16 @@ public class BlockPlayerListener implements Listener {
                 } else { // Not possible to fall here except override
                     Utils.sendMessages(player, Config.getLang("block-already-locked-manual"));
                     event.getBlock().breakNaturally();
-                    Utils.playAccessDenyEffect(player, block);
+                    Utils.playAccessDenyEffect(player, attachedBlock);
                 }
             } else {
                 Utils.sendMessages(player, Config.getLang("block-is-not-lockable"));
                 event.setLine(0, Config.getLang("sign-error"));
-                Utils.playAccessDenyEffect(player, block);
+                Utils.playAccessDenyEffect(player, attachedBlock);
             }
         }
     }
+
     
     // Player select sign
     @EventHandler(priority = EventPriority.LOW)
