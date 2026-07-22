@@ -15,6 +15,12 @@ Plugin configuration properties are managed in [gradle.properties](file:///mnt/R
 
 Always use `./dev.sh build` or `./gradlew build` to ensure Gradle's resource filtering expands these tokens during compilation.
 
+### YAML Resource Files and Gradle Filtering
+Gradle's resource filtering (used to expand `${pluginName}` tokens) processes all characters in resource files:
+- **Never use `\n` inside double-quoted YAML strings** in `lang.yml` or similar files. Gradle expands `\n` to a real newline before SnakeYAML sees the file, breaking the YAML structure.
+- **Use `\\n` instead.** Gradle leaves `\\n` as-is; SnakeYAML delivers it as the two-char literal `\n`; Java code unescapes it with `messages.replace("\\n", "\n")`.
+
+
 ## Coding Guidelines
 
 ### 1. Dynamic Permissions
