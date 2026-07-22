@@ -1,3 +1,9 @@
 {
-  "java.compile.nullAnalysis.mode": "automatic"
+  "java.compile.nullAnalysis.mode": "automatic",
+  "coverage-gutters.coverageFileNames": [
+    "build/reports/jacoco/test/jacocoTestReport.xml",
+    "jacocoTestReport.xml"
+  ],
+  "coverage-gutters.showGutterCoverage": true,
+  "coverage-gutters.showLineCoverage": true
 }
