@@ -324,7 +324,10 @@ public class Utils {
         if (messages == null || messages.isEmpty()) {
             return;
         }
-        sender.sendMessage(messages);
+        // Adding replace here for double-escaped newline.
+        for (String line : messages.replace("\\n", "\n").split("\n")) {
+            sender.sendMessage(line);
+        }
     }
 
     /**

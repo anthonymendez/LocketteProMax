@@ -1,5 +1,5 @@
 # Spanish translation by Alarar and Teen_Biscuits
-command-usage: "&6[Private] &bPrivate plugin ayuda\n&c1. Para agregar un usuario al private, click derecho en el cartel, y escribe /lock <numero fila> <nombre> para cambiar o agregar fila.\n&c2. Para recargar la config, utiliza /lock reload.\n${pluginName} by connection_lost"
+command-usage: "&6&l[${pluginName}] Ayuda\n&71. Bloquear un bloque: &eColoca un cartel en él y escribe &f[Private]&e en la línea 1.\\n&72. Agregar usuario: &eHaz clic derecho en el cartel, luego ejecuta &f/lock <línea> <usuario>&e para editar la línea.\\n&73. Desbloquear bloque: &eRompe el cartel &f[Private]&e del bloque.\\n&74. Acceso público: &eEscribe &f[Everyone]&e en una línea del cartel para permitir el acceso a todos.\\n&75. Cierre automático: &eEscribe &f[Timer:<segundos>]&e en una línea del cartel.\\n&76. Recargar configuración: &eEjecuta &f/lock reload&e para aplicar los cambios.\\n&6${pluginName} by connection_lost"
 you-can-quick-lock-it: '&6[Private] &aClick derecho con el cartel en lo que quieras proteger.'
 you-can-manual-lock-it: '&6[Private] &aPon un cartel y escribe [Private] para privatizarlo.'
 config-reloaded: '&6[Private] &aConfig recargada.'

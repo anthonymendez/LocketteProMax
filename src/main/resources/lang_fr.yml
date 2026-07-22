@@ -1,6 +1,6 @@
 # French translation by Mrflo67 and brunyman
 
-command-usage: "&6[${pluginName}] aide du plugin &b${pluginName}\n&c1. Pour ajouter un joueur au panneau, faites clic droit dessus, puis entrez /lock <ligne> <texte> pour changer la ligne.\n&c2. Pour recharger la configuration, entrez /lock reload.\n${pluginName} par connection_lost"
+command-usage: "&6&l[${pluginName}] Aide\n&71. Verrouiller un bloc: &ePlace un panneau sur le bloc et écris &f[Private]&e à la ligne 1.\n&72. Ajouter un joueur: &eFais un clic droit sur le panneau, puis entre &f/lock <ligne> <joueur>&e pour modifier la ligne.\n&73. Déverrouiller un bloc: &eCasse le panneau &f[Private]&e sur le bloc.\n&74. Accès public: &eÉcris &f[Everyone]&e sur une ligne du panneau pour autoriser tout le monde.\n&75. Fermeture automatique: &eÉcris &f[Timer:<secondes>]&e sur une ligne du panneau.\n&76. Recharger la config: &eExécute &f/lock reload&e pour appliquer les changements.\n&6${pluginName} par connection_lost"
 you-can-quick-lock-it: '&6[${pluginName}] &aClic droit sur un bloc avec un panneau pour le verrouiller.'
 you-can-manual-lock-it: '&6[${pluginName}] &aPlacez un panneau et écrivez [Private] pour le verrouiller.'
 config-reloaded: '&6[${pluginName}] &aConfiguration rechargée.'

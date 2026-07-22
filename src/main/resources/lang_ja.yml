@@ -1,4 +1,4 @@
-command-usage: "&6[${pluginName}] &b${pluginName}プラグインのヘルプです\n&c1. 看板にユーザーを追加するには看板を右クリックして /lock <行番号> <テキスト> と入力して行を編集します。\n&c2. 設定をリロードするには /lock reload と入力します。\n${pluginName} by connection_lost"
+command-usage: "&6&l[${pluginName}] ヘルプ\n&71. ブロックをロック: &e看板をブロックに設置し、1行目に &f[Private]&e と書いてください。\n&72. ユーザーを追加: &e看板を右クリックし、&f/lock <行番号> <ユーザー名>&e と入力して行を編集します。\n&73. ブロックのロックを解除: &eブロック上の &f[Private]&e 看板を壊してください。\n&74. 全体公開: &e看板の行に &f[Everyone]&e と書くと誰でもアクセスできます。\n&75. 自動ドア閉め: &e看板の行に &f[Timer:<秒>]&e と書いてください。\n&76. 設定のリロード: &e&f/lock reload&e を実行して設定を反映します。\n&6${pluginName} by connection_lost"
 you-can-quick-lock-it: "&6[${pluginName}] &a看板を持ってブロックを右クリックしてロック。"
 you-can-manual-lock-it: "&6[${pluginName}] &a看板を置いて[Private]と書いてロックする。"
 config-reloaded: "&6[${pluginName}] &a構成をリロードしました。"

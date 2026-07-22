@@ -1,4 +1,4 @@
-command-usage: "&6[${pluginName}] &b${pluginName} 플러그인 도움말\n&c1. 표지판에 유저를 추가하려면, 표지판을 우클릭하고, 명령어 /lock <줄 번호> <텍스트> 를 입력해 줄을 수정할 수 있습니다.\n&c2. 설정을 리로드하려면, 명령어 /lock reload 를 입력하세요.\n${pluginName} by connection_lost & Korean translation by irochi.moe"
+command-usage: "&6&l[${pluginName}] 도움말\n&71. 블록 잠금: &e표지판을 블록에 설치하고 1번 줄에 &f[Private]&e를 작성하세요.\n&72. 유저 추가: &e표지판을 우클릭한 후 &f/lock <줄 번호> <유저명>&e을 입력해 줄을 수정하세요.\n&73. 블록 잠금 해제: &e블록의 &f[Private]&e 표지판을 파괴하세요.\n&74. 공개 접근: &e표지판의 줄에 &f[Everyone]&e를 작성하면 누구나 접근할 수 있습니다.\n&75. 자동 닫힘: &e표지판의 줄에 &f[Timer:<초>]&e를 작성하세요.\n&76. 설정 리로드: &e&f/lock reload&e를 실행하여 변경 사항을 적용하세요.\n&6${pluginName} by connection_lost & Korean translation by irochi.moe"
 you-can-quick-lock-it: '&6[${pluginName}] &a표지판으로 우클릭해 블록을 잠급니다.'
 you-can-manual-lock-it: '&6[${pluginName}] &a표지판을 설치해 [Private] 를 적어 잠급니다.'
 config-reloaded: '&6[${pluginName}] &a설정 리로드됨.'

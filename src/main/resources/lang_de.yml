@@ -1,6 +1,6 @@
 # German translation by HeartCore
 
-command-usage: "&6[${pluginName}] &b${pluginName} Plugin-Hilfe\n&c1. Um einen User einem Schild hinzuzufügen, rechtsklicke das Schild und gib anschließend /lock <Zeilennummer> <Text> ein, um den Text zu ändern\n&c2. Um die Konfiguration neu zu laden, gib /lock reload ein.\n${pluginName} von connection_lost"
+command-usage: "&6&l[${pluginName}] Hilfe\n&71. Block sperren: &eLege ein Schild am Block an und schreibe &f[Private]&e in Zeile 1.\n&72. Nutzer hinzufügen: &eRechtsklicke das Schild, dann gib &f/lock <Zeile> <Nutzer>&e ein.\n&73. Block entsperren: &eBrich das &f[Private]&e-Schild am Block ab.\n&74. Öffentlicher Zugang: &eSchreibe &f[Everyone]&e in eine Schildzeile, um allen Zugang zu gewähren.\n&75. Automatisches Schließen: &eSchreibe &f[Timer:<Sekunden>]&e in eine Schildzeile.\n&76. Konfig neu laden: &eGib &f/lock reload&e ein, um Änderungen zu übernehmen.\n&6${pluginName} von connection_lost"
 you-can-quick-lock-it: '&6[${pluginName}] &aRechtsklicke den Block mit einem Schild, um ihn zu sichern.'
 you-can-manual-lock-it: '&6[${pluginName}] &aPlatziere ein Schild und schreibe [Private] darauf, um es zu sichern.'
 config-reloaded: '&6[${pluginName}] &aKonfiguratio neu geladen..'

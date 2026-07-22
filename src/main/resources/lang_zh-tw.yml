@@ -20,7 +20,7 @@ block-already-locked-manual: '&6[${pluginName}] &c這個方塊已上鎖。'
 block-is-not-lockable: '&6[${pluginName}] &c這個方塊不能上鎖。'
 sign-selected: '&6[${pluginName}] &a已選取告示牌。'
 sign-error: '&4[錯誤]'
-command-usage: "&6[${pluginName}] &b${pluginName} 插件說明\n&c1. 如要將使用者加入告示牌中，請先按右鍵選取告示牌，然後輸入 \"/lock <行碼> <文字>\" 即可變更行的內容。\n&c2. 如要重新載入配置，請輸入 /lock reload。\n${pluginName} 作者：connection_lost"
+command-usage: "&6&l[${pluginName}] 說明\n&71. 鎖定方塊：&e將告示牌放在方塊上，並在第1行寫上 &f[Private]&e 即可上鎖。\\n&72. 新增使用者：&e右鍵點擊告示牌，然後輸入 &f/lock <行碼> <使用者名稱>&e 修改該行。\\n&73. 解鎖方塊：&e破壞方塊上的 &f[Private]&e 告示牌即可解鎖。\\n&74. 公開存取：&e在告示牌某行寫上 &f[Everyone]&e 即可允許所有人存取。\\n&75. 自動關門：&e在告示牌某行寫上 &f[Timer:<秒數>]&e 即可設定自動關門。\\n&76. 重新載入配置：&e輸入 &f/lock reload&e 來套用配置更改。\\n&6${pluginName} 作者：connection_lost"
 cannot-add-additional-sign-quick: '&6[${pluginName}] &c不能在這裡新增告示牌'
 break-own-lock-sign: '&6[${pluginName}] &a你把告示牌鎖拆了。'
 cannot-break-this-lock-sign: '&6[${pluginName}] &c你不可以拆掉這個告示牌鎖。'

@@ -1,5 +1,5 @@
 # Hungarian translation by andris155
-command-usage: "&6[${pluginName}] &b${pluginName} plugin segítség\n&c1. Ha szeretnél valakit hozzáadni a védéshez, akkor jobb klikkelj a táblára és írd be /lock <sorszám> <név>, hogy megváltoztasd a sort.\n&c2. Ha újra szeretnéd tölteni a plugin-t, akkor írd be /lock reload.\n${pluginName} by connection_lost"
+command-usage: "&6&l[${pluginName}] Segítség\n&71. Blokk zárolása: &eHelyezz egy táblát a blokkra és írd az 1. sorba: &f[Private]&e.\n&72. Felhasználó hozzáadása: &eJobb klikkelj a táblára, majd írd be: &f/lock <sor> <felhasználó>&e.\n&73. Blokk feloldása: &eTörd le a &f[Private]&e táblát a blokkról.\n&74. Nyilvános hozzáférés: &eÍrd a táblára: &f[Everyone]&e, hogy mindenki hozzáférhessen.\n&75. Automatikus zárás: &eÍrd a táblára: &f[Timer:<másodperc>]&e.\n&76. Konfiguráció újratöltése: &eAdd ki: &f/lock reload&e.\n&6${pluginName} by connection_lost"
 you-can-quick-lock-it: '&6[${pluginName}] &aJobb klikkelj a blokkra egy táblával a levédéséhez.'
 you-can-manual-lock-it: '&6[${pluginName}] &aKérlek helyezz le egy táblát és írd rá, hogy [Lock] a levédéshez.'
 config-reloaded: '&6[${pluginName}] &aA konfig újratöltve.'

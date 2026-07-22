@@ -1,5 +1,5 @@
 # Lingua Italiana creata da Maxetto.
-command-usage: "&6[${pluginName}] &bAiuto ${pluginName}\n&c1. Per aggiungere un giocatore nel cartello, fai tasto destro sul cartello, poi scrivi /lock <numero linea> <testo> per modificare la linea indicata.\n&c2. Per ricaricare la configurazione, scrivi /lock reload.\n${pluginName} di connection_lost"
+command-usage: "&6&l[${pluginName}] Aiuto\n&71. Bloccare un blocco: &ePositiona un cartello e scrivi &f[Private]&e alla riga 1.\n&72. Aggiungere un giocatore: &eFai tasto destro sul cartello, poi scrivi &f/lock <riga> <utente>&e per modificarla.\n&73. Sbloccare un blocco: &eRompi il cartello &f[Private]&e sul blocco.\n&74. Accesso pubblico: &eScrivi &f[Everyone]&e su una riga del cartello per permettere l'accesso a tutti.\n&75. Chiusura automatica: &eScrivi &f[Timer:<secondi>]&e su una riga del cartello.\n&76. Ricaricare la config: &eDig &f/lock reload&e per applicare le modifiche.\n&6${pluginName} di connection_lost"
 you-can-quick-lock-it: '&6[${pluginName}] &aFai tasto destro sul blocco con un cartello per privatizzarlo.'
 you-can-manual-lock-it: '&6[${pluginName}] &aPiazza un cartello e scrivi [Private] per privatizzarlo.'
 config-reloaded: '&6[${pluginName}] &aConfigurazione ricaricata correttamente.'

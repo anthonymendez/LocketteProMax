@@ -1,5 +1,5 @@
 #Polskie tłumaczenie od Szwendacz99
-command-usage: "&6[${pluginName}] &bPomoc pluginu ${pluginName}\n&c1. W celu dodania gracza do tabliczki, kliknij prawym tabliczkę i wpisz /lock <numer linii> <tekst> żeby zmienić daną linię.\n&c2. Żeby odświeżyć ustawienia, wpisz /lock reload.\n${pluginName} od connection_lost"
+command-usage: "&6&l[${pluginName}] Pomoc\n&71. Zablokuj blok: &ePostaw tabliczkę na bloku i wpisz &f[Private]&e w linii 1.\n&72. Dodaj gracza: &eKliknij prawym tabliczkę i wpisz &f/lock <numer linii> <gracz>&e.\n&73. Odblokuj blok: &eZniszcz tabliczkę &f[Private]&e na bloku.\n&74. Publiczny dostęp: &eWpisz &f[Everyone]&e w linii tabliczki, by dać dostęp wszystkim.\n&75. Automatyczne zamykanie: &eWpisz &f[Timer:<sekundy>]&e w linii tabliczki.\n&76. Przeładuj konfigurację: &eWpisz &f/lock reload&e.\n&6${pluginName} od connection_lost"
 you-can-quick-lock-it: '&6[${pluginName}] &aKliknij prawym przycieskiem na blok, trzymając tabliczkę, aby zablokować.'
 you-can-manual-lock-it: '&6[${pluginName}] &aPostaw tabliczkę z napisem [Private] aby to zablokować.'
 config-reloaded: '&6[${pluginName}] &aUstawienia odświeżone.'

@@ -1,5 +1,5 @@
 # Chinese (simplified) translation by connection_lost
-command-usage: "&6[${pluginName}] &b${pluginName} 插件说明\n&c1. 为箱子添加或删除用户，首先右键选中一个牌子， 然后输入/lock 行号 玩家名 即可。\n&c2. 管理员重载插件配置，使用 /lock reload\n${pluginName} by connection_lost"
+command-usage: "&6&l[${pluginName}] 帮助\n&71. 锁定方块：&e将牌子放在方块上，并在第1行写上 &f[Private]&e 即可上锁。\n&72. 添加用户：&e右键点击牌子，然后输入 &f/lock <行号> <用户名>&e 修改该行。\n&73. 解锁方块：&e破坏方块上的 &f[Private]&e 牌子即可解锁。\n&74. 公开访问：&e在牌子某行写上 &f[Everyone]&e 即可允许所有人访问。\n&75. 自动关门：&e在牌子某行写上 &f[Timer:<秒数>]&e 即可设置自动关门。\n&76. 重载配置：&e输入 &f/lock reload&e 来应用配置更改。\n&6${pluginName} by connection_lost"
 you-can-quick-lock-it: '&6[${pluginName}] 手持牌子右键箱子即可上锁。'
 you-can-manual-lock-it: '&6[${pluginName}] 贴上一个牌子并写上[Private]即可上锁。'
 config-reloaded: '&6[${pluginName}] &a配置已重新加载。'
