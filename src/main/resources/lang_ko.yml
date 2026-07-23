@@ -26,6 +26,6 @@ cannot-break-this-lock-sign: '&6[${pluginName}] &c이 잠금 표지판은 부술
 break-own-additional-sign: '&6[${pluginName}] &a잠금 표지판을 부쉈습니다.'
 break-redundant-additional-sign: '&6[${pluginName}] &a중복된 잠금 표지판을 부쉈습니다.'
 cannot-break-this-additional-sign: '&6[${pluginName}] &c이 잠금 표지판은 부술 수 없습니다.'
-block-is-locked: '&6[${pluginName}] &c이 블록은 잠겨있습니다.'
+block-is-locked: '&6[${pluginName}] &c이 블록은 잠겨있습니다. 소유자인 경우 먼저 표지판을 파괴한 후 상자를 파괴할 수 있습니다.'
 cannot-interfere-with-others: '&6[${pluginName}] &c다른 것들에 간섭할 수 있는 블록은 설치할 수 없습니다.'
 sign-error: '&4[오류]'

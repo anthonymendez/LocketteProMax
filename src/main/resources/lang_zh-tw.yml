@@ -27,6 +27,6 @@ cannot-break-this-lock-sign: '&6[${pluginName}] &c你不可以拆掉這個告示
 break-own-additional-sign: '&6[${pluginName}] &a你把額外告示牌拆了。'
 break-redundant-additional-sign: '&6[${pluginName}] &a你把廢棄的額外告示牌拆了。'
 cannot-break-this-additional-sign: '&6[${pluginName}] &c你不可以拆掉這個額外告示牌。'
-block-is-locked: '&6[${pluginName}] &c這個方塊已經上鎖。'
+block-is-locked: '&6[${pluginName}] &c這個方塊已經上鎖。如果您是所有人，請先拆掉告示牌，然後才能拆除箱子。'
 cannot-interfere-with-others: '&6[${pluginName}] &c你不能放置會干擾其他方塊的方塊。'
 cannot-add-additional-sign-manual: '&6[${pluginName}] &c不能在這裡新增告示牌'

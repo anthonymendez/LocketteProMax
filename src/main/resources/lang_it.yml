@@ -27,6 +27,6 @@ cannot-break-this-lock-sign: '&6[${pluginName}] &cNon puoi rimuovere questo cart
 break-own-additional-sign: '&6[${pluginName}] &aHai rimosso il cartello aggiuntivo.'
 break-redundant-additional-sign: '&6[${pluginName}] &aHai rimosso un cartello aggiuntivo.'
 cannot-break-this-additional-sign: '&6[${pluginName}] &cNon puoi rimuovere questo cartello aggiuntivo.'
-block-is-locked: '&6[${pluginName}] &cQuesto blocco è stato privatizzato da un giocatore.'
+block-is-locked: '&6[${pluginName}] &cQuesto blocco è stato privatizzato da un giocatore. Se sei il proprietario, rompi prima il cartello per poter rompere la cesta.'
 cannot-interfere-with-others: '&6[${pluginName}] &cNon puoi piazzare un blocco che può interferire con altri.'
 sign-error: '&4[ERRORE]'

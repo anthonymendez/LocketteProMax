@@ -28,6 +28,6 @@ cannot-break-this-lock-sign: '&6[${pluginName}] &cDu kannst dieses Sicherungssch
 break-own-additional-sign: '&6[${pluginName}] &aDu hast dein zusätzliches Schild zerstört.'
 break-redundant-additional-sign: '&6[${pluginName}] &aDu hast ein redundantes zusätzliches Schild zerstört.'
 cannot-break-this-additional-sign: '&6[${pluginName}] &cDu kansnt dieses zusätzliche Schild nicht zerstören.'
-block-is-locked: '&6[${pluginName}] &cDieser Block ist gesichert.'
+block-is-locked: '&6[${pluginName}] &cDieser Block ist gesichert. Wenn du der Besitzer bist, baue zuerst das Schild ab, um die Kiste abzubauen.'
 cannot-interfere-with-others: '&6[${pluginName}] &cDu kannst keinen Block platzieren, der in andere eingreifen könnte.'
 sign-error: '&4[ERROR]'

@@ -27,6 +27,6 @@ cannot-break-this-lock-sign: '&6[${pluginName}] &cNie możesz zniszczyć tej tab
 break-own-additional-sign: '&6[${pluginName}] &aZniszczyłeś swoją dodatkową tabliczkę.'
 break-redundant-additional-sign: '&6[${pluginName}] &aZniszczyłeś niepotrzebną tabliczkę.'
 cannot-break-this-additional-sign: '&6[${pluginName}] &cNie możesz zniszczyć tej dodatkowej tabliczki.'
-block-is-locked: '&6[${pluginName}] &cTen blok jest zablokowany.'
+block-is-locked: '&6[${pluginName}] &cTen blok jest zablokowany. Jeśli jesteś właścicielem, najpierw zniszcz tabliczkę, aby móc zniszczyć skrzynię.'
 cannot-interfere-with-others: '&6[${pluginName}] &cNie możesz postawić bloku który może wpływać na inne.'
 sign-error: '&4[BŁĄD]'

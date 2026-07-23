@@ -26,6 +26,6 @@ cannot-break-this-lock-sign: "&6[${pluginName}] &cYou cannot break this lock sig
 break-own-additional-sign: "&6[${pluginName}] &aYou broke your additional sign."
 break-redundant-additional-sign: "&6[${pluginName}] &aYou broke a redundant additional sign."
 cannot-break-this-additional-sign: "&6[${pluginName}] &cYou cannot break this additional sign."
-block-is-locked: "&6[${pluginName}] &cThis block is locked."
+block-is-locked: "&6[${pluginName}] &cThis block is locked. If you are the owner, break the sign first, then you can break the chest."
 cannot-interfere-with-others: "&6[${pluginName}] &cYou cannot place a block that may interfere others."
 sign-error: "&4[ERROR]"

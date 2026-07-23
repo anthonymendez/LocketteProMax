@@ -27,6 +27,6 @@ cannot-break-this-lock-sign: '&6[Private] &cNo puedes romper este cartel private
 break-own-additional-sign: '&6[Private] &aHas roto tu cartel adicional private.'
 break-redundant-additional-sign: '&6[Private] &aHas roto un cartel private que era redundante.'
 cannot-break-this-additional-sign: '&6[Private] &cNo puedes romper este cartel adicional de private!.'
-block-is-locked: '&6[Private] &cEste bloque esta protegido!.'
+block-is-locked: '&6[Private] &cEste bloque esta protegido!. Si eres el propietario, rompe primero el cartel para poder romper el cofre.'
 cannot-interfere-with-others: '&6[Private] &cNo puedes poner un cartel interfiriendo con otros de private!.'
 sign-error: '&4[ERROR]'

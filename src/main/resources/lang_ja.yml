@@ -26,6 +26,6 @@ cannot-break-this-lock-sign: "&6[${pluginName}] &cこの保護看板は壊せま
 break-own-additional-sign: "&6[${pluginName}] &a追加の看板を壊しました。"
 break-redundant-additional-sign: "&6[${pluginName}] &a冗長な追加看板を壊しました。"
 cannot-break-this-additional-sign: "&6[${pluginName}] &cこの追加看板は壊せません。"
-block-is-locked: "&6[${pluginName}] &cこのブロックは保護されています。"
+block-is-locked: "&6[${pluginName}] &cこのブロックは保護されています。所有者の場合は、先に看板を破壊してください。"
 cannot-interfere-with-others: "&6[${pluginName}] &c他の人の邪魔になるようなブロックは置けません。"
 sign-error: "&4[ERROR]"

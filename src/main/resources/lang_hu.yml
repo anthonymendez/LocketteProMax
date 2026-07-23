@@ -27,6 +27,6 @@ cannot-break-this-lock-sign: '&6[${pluginName}] &cNem ütheted ki ezt a levédé
 break-own-additional-sign: '&6[${pluginName}] &aKiütötted a kiegészítő táblád.'
 break-redundant-additional-sign: '&6[${pluginName}] &aKiütöttél egy felesleges kiegészítő táblát.'
 cannot-break-this-additional-sign: '&6[${pluginName}] &cNem ütheted ki ezt a kiegészítő táblát.'
-block-is-locked: '&6[${pluginName}] &cEz a blokk védett.'
+block-is-locked: '&6[${pluginName}] &cEz a blokk védett. Ha te vagy a tulajdonos, először bontsd le a táblát, utána lebocsáthatod a ládát.'
 cannot-interfere-with-others: '&6[${pluginName}] &cNem helyezhetsz blokkot oda, ahol ütközik más védésével.'
 sign-error: '&4[HIBA]'

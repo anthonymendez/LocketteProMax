@@ -28,6 +28,6 @@ cannot-break-this-lock-sign: '&6[${pluginName}] &cVous ne pouvez pas casser ce p
 break-own-additional-sign: '&6[${pluginName}] &aVous avez cassé votre panneau supplémentaire.'
 break-redundant-additional-sign: '&6[${pluginName}] &aVous avez cassé un panneau supplémentaire redondant.'
 cannot-break-this-additional-sign: '&6[${pluginName}] &cVous ne pouvez pas casser ce panneau supplémentaire.'
-block-is-locked: '&6[${pluginName}] &cCe bloc est verrouillé.'
+block-is-locked: '&6[${pluginName}] &cCe bloc est verrouillé. Si vous êtes le propriétaire, cassez d''abord la pancarte pour pouvoir casser le coffre.'
 cannot-interfere-with-others: '&6[${pluginName}] &cVous ne pouvez pas placer de bloc qui pourrait interférer avec d''autres.'
 sign-error: '&4[ERREUR]'
