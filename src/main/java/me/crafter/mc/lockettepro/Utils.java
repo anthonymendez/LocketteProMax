@@ -95,7 +95,8 @@ public class Utils {
     }
 
     /**
-     * Get plain text from a SignChangeEvent line Component without using deprecated SignChangeEvent#getLine(int).
+     * Get plain text from a SignChangeEvent line Component without using deprecated
+     * SignChangeEvent#getLine(int).
      *
      * @param event The SignChangeEvent.
      * @param line  The line index (0-3).
