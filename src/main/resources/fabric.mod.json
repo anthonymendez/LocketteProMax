@@ -5,9 +5,14 @@
   "name": "LocketteProMax",
   "description": "Client & Server 2-in-1 lock protection and visual chest outline mod",
   "authors": [
+    "Anthony Mendez",
     "Crafter"
   ],
-  "contact": {},
+  "contact": {
+    "homepage": "https://github.com/anthonymendez/LocketteProMax",
+    "sources": "https://github.com/anthonymendez/LocketteProMax",
+    "issues": "https://github.com/anthonymendez/LocketteProMax/issues"
+  },
   "license": "MIT",
   "environment": "*",
   "entrypoints": {
