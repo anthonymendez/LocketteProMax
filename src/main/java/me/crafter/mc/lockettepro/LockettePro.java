@@ -63,9 +63,12 @@ public class LockettePro extends JavaPlugin {
                 plugin.getLogger().info("UUID & expiracy support requires ProtocolLib, or else signs will be ugly!");
             }
         }
+        // Register custom network channel for client status sync
+        LocketteProNetwork.registerNetwork(this);
     }
     
     public void onDisable(){
+        LocketteProNetwork.unregisterNetwork(this);
         if (Config.isUuidEnabled() && Bukkit.getPluginManager().getPlugin("ProtocolLib") != null){
             DependencyProtocolLib.cleanUpProtocolLib(this);
         }
