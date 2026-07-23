@@ -30,6 +30,9 @@ build/
 # run-paper test server directory
 run/
 
+# fabric test server directory
+run-fabric/
+
 # Allow gradle-wrapper.jar to be committed despite *.jar ignore
 !gradle/wrapper/gradle-wrapper.jar
 

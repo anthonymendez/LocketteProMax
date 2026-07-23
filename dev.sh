@@ -46,7 +46,9 @@ usage() {
     echo -e "Usage: $0 [command]"
     echo ""
     echo "Commands:"
-    echo "  (no args)   Clean, build, and run the testing server (default)"
+    echo "  (no args)   Clean, build, and run the Paper server (default)"
+    echo "  fabric      Build and launch Fabric modded environment with 2-in-1 JAR loaded"
+    echo "  client      Alias for fabric"
     echo "  build       Clean and compile the plugin JAR"
     echo "  test        Run the automated test suite (JUnit 5)"
     echo "  report      Open the Gradle compilation/deprecation report in browser"
@@ -65,6 +67,7 @@ if [ -d run/plugins ]; then
 fi
 mkdir -p /tmp/spark
 mkdir -p run/plugins
+mkdir -p run/mods
 if [ ! -L run/plugins/spark ]; then
     ln -sf /tmp/spark run/plugins/spark
 fi
@@ -99,10 +102,39 @@ case "$1" in
         rm -rf run/plugins/LocketteProMax*
         ./gradlew clean build
         print_coverage
+        mkdir -p run/mods
+        cp build/libs/LocketteProMax*.jar run/mods/ 2>/dev/null || true
         log_success "Build completed successfully!"
         log_info "=== [2/2] Launching Paper Server ==="
         ./gradlew runServer
         log_success "Paper server closed successfully."
+        ;;
+    fabric|client)
+        log_info "=== [1/2] Building LocketteProMax 2-in-1 JAR ==="
+        ./gradlew clean build
+        print_coverage
+        log_success "Build completed successfully!"
+
+        log_info "=== [2/2] Setting up Fabric Modded environment ==="
+        mkdir -p run-fabric/mods
+        rm -f run-fabric/mods/LocketteProMax*.jar
+        cp build/libs/LocketteProMax*.jar run-fabric/mods/
+        mkdir -p run/mods
+        cp build/libs/LocketteProMax*.jar run/mods/
+        log_success "Copied LocketteProMax 2-in-1 JAR to run-fabric/mods/ and run/mods/"
+
+        FABRIC_JAR="run-fabric/fabric-server-launch.jar"
+        if [ ! -f "$FABRIC_JAR" ]; then
+            log_info "Downloading Fabric loader launcher..."
+            curl -sSL "https://meta.fabricmc.net/v2/versions/loader/1.21.4/0.16.10/1.0.1/server/jar" -o "$FABRIC_JAR"
+            echo "eula=true" > run-fabric/eula.txt
+        fi
+
+        log_info "=== Launching Fabric Modded Minecraft Environment ==="
+        cd run-fabric
+        java -Xms1G -Xmx2G -Djava.io.tmpdir=/tmp -jar fabric-server-launch.jar nogui
+        cd "$PROJECT_DIR"
+        log_success "Fabric modded environment closed successfully."
         ;;
     build)
         log_info "=== Cleaning and Building LocketteProMax ==="
