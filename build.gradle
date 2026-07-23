@@ -88,7 +88,7 @@ processResources {
     ]
     inputs.properties props
     filteringCharset 'UTF-8'
-    filesMatching(['plugin.yml', 'lang*.yml']) {
+    filesMatching(['plugin.yml', 'fabric.mod.json', 'lang*.yml']) {
         expand props
     }
 }
